@@ -10,6 +10,7 @@
             <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-outline-primary">Dashboard</a>
             <a href="{{ route('admin.pengajuan') }}" class="btn btn-sm btn-outline-info">Pengajuan</a>
             <a href="{{ route('admin.riwayat') }}" class="btn btn-sm btn-outline-info">Riwayat</a>
+            <a href="{{ route('pemasukan') }}" class="btn btn-sm btn-outline-info">Pemasukan</a>
         @endauth
     </div>
 </nav>

@@ -1,10 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'Pengajuan Donasi')
-@section('header', 'Form Pengajuan Donasi')
-@section('subheader', 'Isi formulir berikut untuk mengajukan donasi.')
+@section('title', 'Dashboard Pengguna - Kasih Kita')
 
 @section('content')
+<nav style="background-color: #f8f9fa; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;">
+    <h3 style="margin: 0; color: #0b1f47;">Halo, {{ Auth::user()->name }}</h3>
+    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+        @auth
+            <a href="{{ route('dashboard') }}" class="btn btn-sm btn-outline-info">Dashboard</a>
+            <a href="{{ route('pengajuan') }}" class="btn btn-sm btn-outline-info">Pengajuan</a>
+            <a href="{{ route('riwayat') }}" class="btn btn-sm btn-outline-info">Riwayat</a>
+            <a href="{{ route('user.pemasukan') }}" class="btn btn-sm btn-outline-info">Pemasukan</a>
+        @endauth
+    </div>
+</nav>
+
     {{-- Flash Message --}}
     @if (session('success'))
         <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">

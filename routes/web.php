@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\DonasiController;
 use App\Models\Donasi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController; // Tambahan
 // Admin mengelola donasi
@@ -34,9 +35,8 @@ Route::middleware(['auth', 'verified'])->get('/dashboard', [DonasiController::cl
 
 
 // Dashboard untuk admin
-Route::middleware(['auth', 'verified'])->get('/admin', function () {
-    return view('admin.dashboard'); // ⬅️ ini memanggil VIEW, bukan controller
-})->name('admin.dashboard');
+Route::middleware(['auth', 'verified'])->get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
 
 // Profil
 Route::middleware('auth')->group(function () {
@@ -45,9 +45,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Langsung ke file pemasukan.blade.php
-    Route::get('/pemasukan', [DonasiController::class, 'pemasukan'])->name('pemasukan');
+    Route::get('/pemasukan', [DonasiController::class, 'pemasukan'])->name('user.pemasukan');
 
 });
+
 
 // Halaman form pengajuan donasi
 Route::get('/pengajuan', [DonasiController::class, 'index'])->name('pengajuan');
@@ -80,8 +81,20 @@ Route::middleware(['auth'])->group(function () {
 // 🔽 Route untuk menyimpan pengajuan donasi
 Route::post('/pengajuan', [DonasiController::class, 'store'])->name('pengajuan.store');
 
+Route::get('/admin/export/pdf', [AdminController::class, 'exportPDF'])->name('admin.export.pdf');
+Route::get('/admin/export/excel', [AdminController::class, 'exportExcel'])->name('admin.export.excel');
+Route::get('/admin/pemasukan', [AdminController::class, 'pemasukan'])->name('pemasukan');
+Route::get('/admin/pemasukan/export-pdf', [AdminController::class, 'exportPemasukanPDF'])->name('pemasukan.export.pdf');
 
+// Halaman Tentang Kami
+Route::get('/tentang', function () {
+    return view('tentang');
+})->name('tentang');
 
+// Halaman Kontak
+Route::get('/kontak', function () {
+    return view('kontak');
+})->name('kontak');
 
 // Pastikan login controller diarahkan jika dibutuhkan manual (opsional)
 require __DIR__.'/auth.php';

@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('KasihKita') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -24,7 +24,14 @@
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             <div>
-    {{ Auth::check() ? Auth::user()->name : 'Tamu' }}
+    <div>
+    @auth
+        {{ Auth::user()->name }}
+    @else
+        Menu
+    @endauth
+</div>
+
 </div>
 
 
@@ -37,21 +44,30 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
+    @auth
+        <x-dropdown-link :href="route('profile.edit')">
+            {{ __('Profile') }}
+        </x-dropdown-link>
 
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <x-dropdown-link :href="route('logout')"
+                    onclick="event.preventDefault(); this.closest('form').submit();">
+                {{ __('Log Out') }}
+            </x-dropdown-link>
+        </form>
+    @endauth
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
+    @guest
+        <x-dropdown-link :href="route('login')">
+            {{ __('Login') }}
+        </x-dropdown-link>
+        <x-dropdown-link :href="route('register')">
+            {{ __('Daftar') }}
+        </x-dropdown-link>
+    @endguest
+</x-slot>
+
                 </x-dropdown>
             </div>
 
@@ -89,21 +105,30 @@
 
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
+    @auth
+        <x-responsive-nav-link :href="route('profile.edit')">
+            {{ __('Profile') }}
+        </x-responsive-nav-link>
 
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <x-responsive-nav-link :href="route('logout')"
+                    onclick="event.preventDefault(); this.closest('form').submit();">
+                {{ __('Log Out') }}
+            </x-responsive-nav-link>
+        </form>
+    @endauth
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
+    @guest
+        <x-responsive-nav-link :href="route('login')">
+            {{ __('Login') }}
+        </x-responsive-nav-link>
+        <x-responsive-nav-link :href="route('register')">
+            {{ __('Daftar') }}
+        </x-responsive-nav-link>
+    @endguest
+</div>
+
         </div>
     </div>
 </nav>

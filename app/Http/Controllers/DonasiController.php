@@ -181,9 +181,14 @@ public function store(Request $request)
 
 public function dashboard()
 {
-    $donasis = Donasi::where('status', 'Disetujui')->latest()->get();
+    $donasis = Donasi::where('status', 'Disetujui')
+        ->whereRaw('(SELECT COALESCE(SUM(jumlah), 0) FROM transaksi_donasis WHERE transaksi_donasis.donasi_id = donasis.id) < target')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
     return view('dashboard', compact('donasis'));
 }
+
 public function beriDonasi(Request $request, $id)
 {
     $donasi = Donasi::findOrFail($id);

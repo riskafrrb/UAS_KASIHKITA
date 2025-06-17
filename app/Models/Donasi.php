@@ -38,5 +38,11 @@ class Donasi extends Model
 {
     return $this->hasMany(TransaksiDonasi::class);
 }
+// Donasi.php
+public function transaksis()
+{
+    return $this->hasMany(TransaksiDonasi::class, 'donasi_id');
+}
+
 
 }

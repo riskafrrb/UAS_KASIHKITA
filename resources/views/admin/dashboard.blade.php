@@ -10,6 +10,7 @@
             <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-outline-primary">Dashboard</a>
             <a href="{{ route('admin.pengajuan') }}" class="btn btn-sm btn-outline-info">Pengajuan</a>
             <a href="{{ route('admin.riwayat') }}" class="btn btn-sm btn-outline-info">Riwayat</a>
+            <a href="{{ route('pemasukan') }}" class="btn btn-sm btn-outline-info">Pemasukan</a>
         @endauth
     </div>
 </nav>
@@ -18,6 +19,44 @@
     <h2 class="mb-4">Dashboard Admin</h2>
     <p>Selamat datang di halaman dashboard admin. Di sini Anda bisa mengelola pengajuan donasi, memantau pemasukan, dan melihat riwayat aktivitas.</p>
 
-    {{-- Tambahkan fitur admin lainnya di sini --}}
-</div>
+    <h4 class="mt-5">Diagram Distribusi Kategori Donasi</h4>
+    <div style="max-width: 500px; margin: auto;">
+    <canvas id="donasiChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('donasiChart').getContext('2d');
+const donasiChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: {!! json_encode($labels) !!},
+        datasets: [{
+            label: 'Jumlah Donasi per Kategori',
+            data: {!! json_encode($data) !!},
+            backgroundColor: [
+                '#4e73df',
+                '#1cc88a',
+                '#36b9cc',
+                '#f6c23e',
+                '#e74a3b',
+                '#858796'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom',
+            },
+            title: {
+                display: true,
+                text: 'Distribusi Kategori Donasi'
+            }
+        }
+    }
+});
+
+</script>
 @endsection
