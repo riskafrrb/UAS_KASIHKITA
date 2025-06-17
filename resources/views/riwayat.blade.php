@@ -26,9 +26,9 @@
             <table class="min-w-full text-sm text-left text-gray-700 border">
                 <thead class="bg-blue-50 text-gray-800 uppercase text-xs">
                     <tr>
-                        <th class="p-3 border">Nama</th>
-                        <th class="p-3 border">Jumlah</th>
-                        <th class="p-3 border">Keterangan</th>
+                        <th class="p-3 border">Judul</th>
+                        <th class="p-3 border">Penerima</th>
+                        <th class="p-3 border">Target</th>
                         <th class="p-3 border">Status</th>
                         <th class="p-3 border">Aksi</th>
                     </tr>
@@ -36,9 +36,9 @@
                 <tbody>
                     @forelse ($donasi as $d)
                         <tr class="hover:bg-gray-50">
-                            <td class="p-3 border">{{ $d->nama }}</td>
-                            <td class="p-3 border">Rp{{ number_format($d->jumlah, 0, ',', '.') }}</td>
-                            <td class="p-3 border">{{ $d->keterangan }}</td>
+                            <td class="p-3 border">{{ $d->judul }}</td>
+                            <td class="p-3 border">{{ $d->penerima }}</td>
+                            <td class="p-3 border">Rp{{ number_format($d->target, 0, ',', '.') }}</td>
                             <td class="p-3 border">
                                 @if ($d->status == 'Disetujui')
                                     <span class="inline-block px-2 py-1 text-xs font-semibold bg-green-100 text-green-700 rounded">Disetujui</span>
@@ -79,16 +79,49 @@
 
     {{-- Riwayat Berdonasi (Kosong dulu) --}}
     <div id="riwayat-berdonasi" class="hidden">
-        <div class="bg-white p-6 rounded-xl shadow-lg text-gray-600 italic text-center border border-dashed">
-            Belum ada riwayat berdonasi.
-        </div>
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+        @if ($transaksi->isEmpty())
+            <div class="text-gray-600 italic text-center border border-dashed py-4">
+                Belum ada riwayat berdonasi.
+            </div>
+        @else
+            <table class="min-w-full text-sm text-left text-gray-700 border">
+                <thead class="bg-green-50 text-gray-800 uppercase text-xs">
+                    <tr>
+                        <th class="p-3 border">Donasi Untuk</th>
+                        <th class="p-3 border">Jumlah</th>
+                        <th class="p-3 border">Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($transaksi as $t)
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3 border">{{ $t->donasi->judul ?? '-' }}</td>
+                            <td class="p-3 border">Rp{{ number_format($t->jumlah, 0, ',', '.') }}</td>
+                            <td class="p-3 border">{{ $t->created_at->format('d M Y H:i') }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
     </div>
+</div>
+
 
     <script>
-        function tampilkanRiwayat() {
-            const jenis = document.getElementById('jenis-riwayat').value;
-            document.getElementById('riwayat-pengajuan').style.display = jenis === 'pengajuan' ? 'block' : 'none';
-            document.getElementById('riwayat-berdonasi').style.display = jenis === 'berdonasi' ? 'block' : 'none';
-        }
-    </script>
+    function tampilkanRiwayat() {
+        const jenis = document.getElementById('jenis-riwayat').value;
+        document.getElementById('riwayat-pengajuan').style.display = jenis === 'pengajuan' ? 'block' : 'none';
+        document.getElementById('riwayat-berdonasi').style.display = jenis === 'berdonasi' ? 'block' : 'none';
+        localStorage.setItem('riwayat', jenis);
+    }
+
+    // Saat reload, tetap di tab sebelumnya
+    document.addEventListener("DOMContentLoaded", function () {
+        const last = localStorage.getItem('riwayat') || 'pengajuan';
+        document.getElementById('jenis-riwayat').value = last;
+        tampilkanRiwayat();
+    });
+</script>
+
 @endsection

@@ -14,7 +14,19 @@ class Donasi extends Model
     protected $table = 'donasis'; 
     
     // ✅ Tambahkan 'user_id' agar bisa disimpan
-    protected $fillable = ['user_id', 'nama', 'jumlah', 'keterangan', 'status'];
+    protected $fillable = [
+    'user_id',
+    'judul',
+    'penerima',
+    'kontak',
+    'kategori',
+    'target',
+    'rekening',
+    'bank',
+    'keterangan',
+    'status'
+];
+
 
 
     // ✅ Relasi: Donasi dimiliki oleh satu User

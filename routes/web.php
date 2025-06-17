@@ -29,10 +29,9 @@ Route::middleware(['auth', 'verified'])->get('/redirect', function () {
 
 Route::get('/donasi/{id}/bayar', [DonasiController::class, 'bayar'])->name('donasi.bayar')->middleware('auth');
 
-// Dashboard untuk user biasa
-Route::middleware(['auth', 'verified'])->get('/dashboard', function () {
-    return view('dashboard'); // tanpa folder "user"
-})->name('dashboard');
+// Dashboard untuk user biasa (dengan donasi yang disetujui)
+Route::middleware(['auth', 'verified'])->get('/dashboard', [DonasiController::class, 'dashboard'])->name('dashboard');
+
 
 // Dashboard untuk admin
 Route::middleware(['auth', 'verified'])->get('/admin', function () {
@@ -46,7 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Langsung ke file pemasukan.blade.php
-    Route::view('/pemasukan', 'pemasukan')->name('pemasukan');
+    Route::get('/pemasukan', [DonasiController::class, 'pemasukan'])->name('pemasukan');
+
 });
 
 // Halaman form pengajuan donasi
@@ -71,9 +71,14 @@ Route::middleware('auth')->get('/donasi/{id}/form', [DonasiController::class, 'f
 // Proses donasi dari pendonasi
 Route::middleware('auth')->post('/donasi/{id}/beri', [DonasiController::class, 'beriDonasi'])->name('donasi.beri');
 
+Route::post('/donasi/{id}/beri', [DonasiController::class, 'beriDonasi'])->name('donasi.beri');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/riwayat', [DonasiController::class, 'adminRiwayat'])->name('admin.riwayat');
 });
+
+// 🔽 Route untuk menyimpan pengajuan donasi
+Route::post('/pengajuan', [DonasiController::class, 'store'])->name('pengajuan.store');
 
 
 

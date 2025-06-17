@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Donasi')
-@section('header', 'Edit Donasi')
-@section('subheader', 'Perbarui informasi donasi kamu di sini.')
+@section('title', 'Edit Pengajuan Donasi')
+@section('header', 'Edit Pengajuan Donasi')
+@section('subheader', 'Perbarui informasi pengajuan donasi kamu di sini.')
 
 @section('content')
     @if (session('success'))
@@ -17,18 +17,50 @@
             @method('PUT')
 
             <div class="mb-4">
-                <label for="nama" class="block text-sm font-semibold text-gray-700">Nama Donatur</label>
-                <input type="text" name="nama" id="nama" value="{{ old('nama', $donasi->nama) }}" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300" required>
+                <label for="judul" class="block text-sm font-semibold text-gray-700">Judul Donasi</label>
+                <input type="text" name="judul" id="judul" value="{{ old('judul', $donasi->judul) }}" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300" required>
             </div>
 
             <div class="mb-4">
-                <label for="jumlah" class="block text-sm font-semibold text-gray-700">Jumlah Donasi</label>
-                <input type="number" name="jumlah" id="jumlah" value="{{ old('jumlah', $donasi->jumlah) }}" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300" required>
+                <label for="penerima" class="block text-sm font-semibold text-gray-700">Nama Penerima</label>
+                <input type="text" name="penerima" id="penerima" value="{{ old('penerima', $donasi->penerima) }}" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300" required>
             </div>
 
             <div class="mb-4">
-                <label for="keterangan" class="block text-sm font-semibold text-gray-700">Keterangan</label>
-                <textarea name="keterangan" id="keterangan" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300">{{ old('keterangan', $donasi->keterangan) }}</textarea>
+                <label for="kategori" class="block text-sm font-semibold text-gray-700">Kategori</label>
+                <select name="kategori" id="kategori" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300" required>
+                    <option value="">-- Pilih Kategori --</option>
+                    @foreach (['Bencana Alam', 'Pendidikan', 'Kesehatan', 'Sosial', 'Lainnya'] as $kategori)
+                        <option value="{{ $kategori }}" {{ old('kategori', $donasi->kategori) === $kategori ? 'selected' : '' }}>
+                            {{ $kategori }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="target" class="block text-sm font-semibold text-gray-700">Target Donasi</label>
+                <input type="number" name="target" id="target" value="{{ old('target', $donasi->target) }}" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="rekening" class="block text-sm font-semibold text-gray-700">No. Rekening</label>
+                <input type="text" name="rekening" id="rekening" value="{{ old('rekening', $donasi->rekening) }}" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="bank" class="block text-sm font-semibold text-gray-700">Bank</label>
+                <input type="text" name="bank" id="bank" value="{{ old('bank', $donasi->bank) }}" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="kontak" class="block text-sm font-semibold text-gray-700">Kontak (WA/Email)</label>
+                <input type="text" name="kontak" id="kontak" value="{{ old('kontak', $donasi->kontak) }}" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="keterangan" class="block text-sm font-semibold text-gray-700">Keterangan (Opsional)</label>
+                <textarea name="keterangan" id="keterangan" rows="4" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300">{{ old('keterangan', $donasi->keterangan) }}</textarea>
             </div>
 
             <div class="flex justify-between items-center">

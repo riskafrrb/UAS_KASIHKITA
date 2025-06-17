@@ -12,14 +12,21 @@ return new class extends Migration
     public function up(): void
 {
     Schema::create('donasis', function (Blueprint $table) {
-    $table->id();
-    $table->string('nama');
-    $table->decimal('jumlah', 12, 2);
-    $table->text('keterangan')->nullable();
-    $table->timestamps();
-    $table->string('status')->default('Pending');
-});
+        $table->id();
+        $table->foreignId('user_id')->constrained()->onDelete('cascade'); // relasi ke users
+        $table->string('judul');
+        $table->string('penerima');
+        $table->string('kontak');
+        $table->string('kategori');
+        $table->decimal('target', 12, 2);
+        $table->string('rekening');
+        $table->string('bank');
+        $table->text('keterangan')->nullable();
+        $table->string('status')->default('Pending');
+        $table->timestamps();
+    });
 }
+
 
 
     /**
