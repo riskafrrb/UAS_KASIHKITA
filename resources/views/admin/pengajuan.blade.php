@@ -14,7 +14,7 @@
         @endauth
     </div>
 </nav>
-<div class="container py-5">
+<div class="container py-5 text-white bg-gray-900">
     <h2 class="mb-4">Kelola Pengajuan Donasi</h2>
 
     @if (session('success'))
@@ -58,12 +58,13 @@
                         <form action="{{ route('admin.ubah_status', $donasi->id) }}" method="POST" style="display: inline-flex; gap: 4px;">
                             @csrf
                             @method('PUT')
-                            <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
-                                <option disabled selected>Ubah Status</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Disetujui">Disetujui</option>
-                                <option value="Ditolak">Ditolak</option>
-                            </select>
+                            <select name="status" class="form-select form-select-sm" onchange="this.form.submit()" style="color: black;">
+    <option disabled selected>Ubah Status</option>
+    <option value="Pending">Pending</option>
+    <option value="Disetujui">Disetujui</option>
+    <option value="Ditolak">Ditolak</option>
+</select>
+
                         </form>
                     </td>
                 </tr>

@@ -43,6 +43,9 @@ public function transaksis()
 {
     return $this->hasMany(TransaksiDonasi::class, 'donasi_id');
 }
+protected $casts = [
+    'target' => 'integer',
+];
 
 
 }

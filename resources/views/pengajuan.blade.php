@@ -36,7 +36,7 @@
 
             {{-- Nama Penerima --}}
             <div class="mb-4">
-                <label for="penerima" class="block text-sm font-semibold text-gray-700 mb-1">Nama Penerima Donasi</label>
+                <label for="penerima" class="block text-sm font-semibold text-gray-700 mb-1">Nama Pengaju Donasi</label>
                 <input type="text" name="penerima" id="penerima" class="w-full border border-gray-300 px-4 py-2 rounded" required>
             </div>
             

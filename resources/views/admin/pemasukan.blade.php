@@ -14,7 +14,7 @@
         @endauth
     </div>
 </nav>
-<div class="container py-5">
+<div class="container py-5 text-white bg-gray-900">
     <h2 class="mb-4">Laporan Pemasukan per Kampanye Donasi</h2>
 
     <table class="table table-bordered">

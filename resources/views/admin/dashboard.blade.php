@@ -15,7 +15,7 @@
     </div>
 </nav>
 
-<div class="container py-5">
+<div class="container py-5 text-white bg-gray-900">
     <h2 class="mb-4">Dashboard Admin</h2>
     <p>Selamat datang di halaman dashboard admin. Di sini Anda bisa mengelola pengajuan donasi, memantau pemasukan, dan melihat riwayat aktivitas.</p>
 
@@ -26,37 +26,41 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const ctx = document.getElementById('donasiChart').getContext('2d');
-const donasiChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: {!! json_encode($labels) !!},
-        datasets: [{
-            label: 'Jumlah Donasi per Kategori',
-            data: {!! json_encode($data) !!},
-            backgroundColor: [
-                '#4e73df',
-                '#1cc88a',
-                '#36b9cc',
-                '#f6c23e',
-                '#e74a3b',
-                '#858796'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'bottom',
-            },
-            title: {
-                display: true,
-                text: 'Distribusi Kategori Donasi'
+    const donasiChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: {!! json_encode($labels) !!},
+            datasets: [{
+                label: 'Jumlah Donasi per Kategori',
+                data: {!! json_encode($data) !!},
+                backgroundColor: [
+                    '#4e73df',
+                    '#1cc88a',
+                    '#36b9cc',
+                    '#f6c23e',
+                    '#e74a3b',
+                    '#858796'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: 'white' // Ubah warna label legend jadi putih
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Distribusi Kategori Donasi',
+                    color: 'white' // Ubah warna judul jadi putih
+                }
             }
         }
-    }
-});
-
+    });
 </script>
+
 @endsection

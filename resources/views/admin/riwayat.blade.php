@@ -15,7 +15,8 @@
     </div>
 </nav>
 <div class="container py-5">
-    <h2 class="mb-4">Riwayat Donasi oleh Pendonasi</h2>
+    <h2 class="mb-4 text-white">Riwayat Donasi oleh Pendonasi</h2>
+
 
     @forelse ($donasis as $donasi)
         <div class="mb-5 p-4 border rounded-lg shadow-sm bg-white">
